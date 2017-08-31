@@ -1,15 +1,25 @@
+/** {
+    border: 1px solid red;
+}*/
+
 body {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
-.container {
-    padding: 50px 0;
+
+div {
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    max-width: 450px;
 }
+
 button {
-    padding: 20px 20px 0;
+    padding: 20px;
     background-color: white;
 }
 
-#counter {
-    display: inline-block;
+img {
+    width: 100%;
+    height: 275px;
 }
