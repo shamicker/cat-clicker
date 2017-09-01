@@ -16,6 +16,34 @@ var catInfo = [
         'id': 'chewie',
         'score': 0,
         'alt': 'peeking-cat'
+    },
+    {
+        'name': 'Harvey',
+        'image': 'images/harvey.jpg',
+        'id': 'harvey',
+        'score': 0,
+        'alt': 'see the cute Harvey!'
+    },
+    {
+        'name': 'Arthur',
+        'image': 'images/arthur.jpg',
+        'id': 'arthur',
+        'score': 0,
+        'alt': 'Arthur is cute.'
+    },
+    {
+        'name': 'Hi-5',
+        'image': 'images/hi-5.jpg',
+        'id': 'hi-5',
+        'score': 0,
+        'alt': 'Hi-5 is a master hi-5-er!'
+    },
+    {
+        'name': 'Pipsqueak',
+        'image': 'images/Pipsqueak.jpg',
+        'id': 'Pipsqueak',
+        'score': 0,
+        'alt': 'What a cutie Pipsqueak is.'
     }
 ];
 
@@ -49,19 +77,18 @@ function addCat(cat, index){
     var div = document.getElementById(cat.id);
     var childrenList = div.children;
 
-    // the h2
-    childrenList[0].innerHTML = cat.name;
-
     // the button
     childrenList[1].setAttribute('id', 'btn-' + cat.id);
     childrenList[1].firstChild.setAttribute('src', cat.image);
     childrenList[1].firstChild.setAttribute('alt', cat.alt);
 
+    // the h2
+    childrenList[0].innerHTML = cat.name;
     // the p
     childrenList[2].innerHTML = "You have clicked this cat <span id='" + cat.id + "-count'>" + cat.score + "</span> times.</p>";
 }
 
-function addButton(cat, index){
+function addButton(cat){
     // get cat's button
     var button = document.getElementById('btn-' + cat.id);
     var scoreCount = document.getElementById(cat.id + '-count');
