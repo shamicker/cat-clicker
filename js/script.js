@@ -30,7 +30,7 @@ var catInfo = [{
         'alt': 'Hi-5 is a master hi-5-er!'
     },{
         'name': 'Pipsqueak',
-        'image': 'images/Pipsqueak.jpg',
+        'image': 'images/pipsqueak.jpg',
         'id': 'pipsqueak',
         'score': 0,
         'alt': 'What a cutie Pipsqueak is.'
