@@ -72,3 +72,7 @@ li {
 .hide {
     display: none;
 }
+
+.selected {
+    background-color: antiquewhite;
+}
