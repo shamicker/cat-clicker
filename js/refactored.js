@@ -1,7 +1,8 @@
 // Model - pure info
 // the id is the name of the cat, without capitalization
-var cats = [
-    {
+var model = {
+    adminToggle: false,
+    cats:    [{
         'image': 'images/poplinre.jpg',
         'id': 'poplinre',
         'score': 0,
@@ -31,8 +32,8 @@ var cats = [
         'id': 'pipsqueak',
         'score': 0,
         'alt': 'What a cutie Pipsqueak is.'
-    }
-];
+    }]
+};
 
 // Octopus - communications between model and views
 // (user functions?)
@@ -40,6 +41,7 @@ var octopus = {
     init: function(){
         viewList.init();
         viewCard.init();
+        admin.init();
     },
 
     makeUpperCase: function(item){
@@ -48,7 +50,7 @@ var octopus = {
 
     getCatIds: function(){
         var catIds = [];
-        cats.forEach(function(cat){
+        model.cats.forEach(function(cat){
             catIds.push(cat.id);
         })
         return catIds;
@@ -56,7 +58,7 @@ var octopus = {
 
     getCatInfo: function(catName){
         var catInfo;
-        cats.forEach(function(cat){
+        model.cats.forEach(function(cat){
             if (cat.id === catName){
                 catInfo = cat;
             }
@@ -73,10 +75,11 @@ var octopus = {
             var id = button.parentElement.getElementsByTagName('span')[0].getAttribute('id');
 
             button.parentElement.getElementsByTagName('span')[0].innerHTML = 1 + octopus.getCatInfo(id).score++;
-
-            // event.stopPropagation();
-            // event.preventDefault();
         }, false);
+    },
+
+    kjgjgjf: function(){
+
     }
 };
 
@@ -154,6 +157,24 @@ var viewCard = {
                 div.lastChild.innerHTML = "You have clicked this cat <span id='" + cat.id + "'>" + cat.score + "</span> times.";
             }));
         }
+    }
+};
+
+var admin = {
+    init: function(){
+        // get admin button
+        var button = document.getElementById('admin');
+
+        // set text
+        button.innerHTML = "<h2>Admin</h2>";
+        document.getElementById('nameLabel').innerHTML = "Change cat's name to:";
+        document.getElementById('urlLabel').innerHTML = "Change cat's url to:";
+        document.getElementById('clickLabel').innerHTML = "Change cat's clicks to:";
+
+        // opens admin section on click
+        button.addEventListener('click', function(){
+            button.nextElementSibling.setAttribute('class', '');
+        }, false);
     }
 };
 

@@ -4,28 +4,21 @@
 
 body {
     box-sizing: border-box;
+    max-width: 900px;
+    margin: auto;
 }
 
-#main {
+#main,
+#pro {
     display: flex;
     justify-content: space-around;
-    /*flex-flow: wrap;*/
     align-items: stretch;
     padding: 20px;
-    /*width: 100%;*/
     text-align: center;
     margin: auto;
 }
 
-#viewing {
-    /*height: 100%;*/
-    /*display: flex;*/
-    /*flex-flow: column;*/
-    justify-content: space-around;
-    margin: auto;
-}
-
-button {
+#viewing > button {
     padding: 20px;
     background-color: white;
     cursor: pointer;
@@ -41,16 +34,36 @@ h2 {
     margin: 10px;
 }
 
-ul {
-    text-align: center;
-    padding: 0;
-    width: 100%;
+form {
+    /*max-width: 500px;*/
+    padding: 5px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+input,
+label {
+    padding: 5px;
+    margin: 2% 0;
+    width: 45%;
+    flex-grow: 1;
 }
 
 ul,
+#admin {
+    text-align: center;
+    padding: 0;
+    /*width: 100%;*/
+}
+
+ul,
+form,
+#admin,
 #viewing {
     flex-grow: 1;
-    max-width: 48%;
+    max-width: 45%;
+    margin: auto;
 }
 
 li {
@@ -69,6 +82,18 @@ li {
     /*width: 100%;*/
 }
 
+#admin {
+    margin: 0 50px auto;
+    /*padding: 0 20px;*/
+    max-width: 25%;
+    max-height: 25%;
+}
+
 .hide {
     display: none;
+}
+
+input[type='submit'],
+input[type='button'] {
+    cursor: pointer;
 }
