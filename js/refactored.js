@@ -140,14 +140,20 @@ var viewCard = {
 
             // when cat name is clicked, cat's card & info shows up, and allows for image click
             nameList[i].addEventListener('click', (function(){
+
                 // get all cat's info
                 var cat = octopus.getCatInfo(this.getAttribute('id'));
 
-                // get viewing div to update cat
-                var catLink = this;
+                // remove all colours from list
+                var kids = this.parentElement.children;
+                for (var i=0; i<kids.length; i++){
+                    kids[i].classList.remove('selected');
+                }
+                // add colour to selected name
+                this.classList.add('selected');
 
                 // make the div visible
-                div.setAttribute('class', '');
+                div.classList.remove('hide');
 
                 // add the image
                 div.firstChild.firstChild.setAttribute('src', cat.image);
