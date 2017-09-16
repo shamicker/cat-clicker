@@ -18,19 +18,25 @@
 
 <body>
   <div id="main">
-    <ul></ul>
+    <ul id='cat-list'></ul>
+    <div id="viewing" class="hide">
+      <h2 id='cat-name'></h2>
+      <button id="cat-button"><img id="cat-image" src="" alt=""></button>
+      <p id="p">You have clicked <span id='catClickName'></span> <span id='count'></span> times!</p>
+    </div>
   </div>
   <hr>
   <div id="pro">
     <button id="admin"></button>
     <form class="hide">
-      <label id="nameLabel" for="nameChange"></label><input type="text" name="name"><br>
-      <label id="urlLabel" for="urlLabel"></label><input type="text" name="url"><br>
-      <label id="clickLabel" for="clickLabel"></label><input type="text" name="clicks"><br>
-      <input type='submit' value="Submit">
-      <input type='button' value="Cancel">
+      <label id="idLabel" for="idChange"></label><input type="text" name="id"><br>
+      <label id="imageLabel" for="imageLabel"></label><input type="text" name="image"><br>
+      <label id="scoreLabel" for="scoreLabel"></label><input type="text" name="score"><br>
+      <input type='button' id="makeChanges" value="Submit changes">
+      <input type='button' id="cancel" value="Cancel">
     </form>
   </div>
-  <script src="js/refactored.js"></script>
+  <script src="js/pro-refactored.js"></script>
+  <!-- <script src="js/refactored.js"></script> -->
 </body>
 </html>

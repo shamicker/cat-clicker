@@ -1,7 +1,7 @@
 // Model - pure info
 // the id is the name of the cat, without capitalization
 var model = {
-    adminToggle: false,
+    currentCat: null,
     cats:    [{
         'image': 'images/poplinre.jpg',
         'id': 'poplinre',
@@ -48,6 +48,14 @@ var octopus = {
         return item.charAt(0).toUpperCase() + item.slice(1)
     },
 
+    setCurrentCat: function(cat){
+        model.currentCat = cat;
+    },
+
+    getCurrentCat: function(){
+        return model.currentCat;
+    },
+
     getCatIds: function(){
         var catIds = [];
         model.cats.forEach(function(cat){
@@ -78,8 +86,14 @@ var octopus = {
         }, false);
     },
 
-    kjgjgjf: function(){
-
+    submitChanges: function(currentCat, inputNode){
+        console.log('\nsubmitting ' + inputNode.getAttribute('name'));
+        var currentCatInfo = octopus.getCatInfo(currentCat);
+        var key = inputNode.getAttribute('name');
+        currentCatInfo[key] = inputNode.value;
+        console.log('key is: ', key);
+        console.log('currentCatInfo[' + key + '] is: ', currentCatInfo[key]);
+        // admin.render();
     }
 };
 
@@ -151,6 +165,7 @@ var viewCard = {
                 }
                 // add colour to selected name
                 this.classList.add('selected');
+                octopus.setCurrentCat(this.getAttribute('id'));
 
                 // make the div visible
                 div.classList.remove('hide');
@@ -168,18 +183,47 @@ var viewCard = {
 
 var admin = {
     init: function(){
-        // get admin button
+        // get buttons for event listeners
         var button = document.getElementById('admin');
+        var submitButton = document.getElementById('makeChanges');
+        var cancelButton = document.getElementById('cancel');
+
+        // // get input nodes for updating changes
+        // var name = document.getElementById('nameLabel').nextElementSibling;
+        // var url = document.getElementById('urlLabel').nextElementSibling;
+        // var click = document.getElementById('clickLabel').nextElementSibling;
 
         // set text
         button.innerHTML = "<h2>Admin</h2>";
-        document.getElementById('nameLabel').innerHTML = "Change cat's name to:";
-        document.getElementById('urlLabel').innerHTML = "Change cat's url to:";
-        document.getElementById('clickLabel').innerHTML = "Change cat's clicks to:";
+        idLabel.innerHTML = "Change cat's name to:";
+        imageLabel.innerHTML = "Change cat's url to:";
+        scoreLabel.innerHTML = "Change cat's clicks to:";
 
         // opens admin section on click
         button.addEventListener('click', function(){
             button.nextElementSibling.setAttribute('class', '');
+        }, false);
+
+        // change data when submitted
+        submitButton.addEventListener('click', function(){
+            console.log('submit button clicked!');
+            var children = this.parentElement.getElementsByTagName('label');
+            var currentCat = octopus.getCurrentCat();
+
+            // get input values
+            for (var i=0; i<children.length; i++){
+                var item = children[i].nextElementSibling;
+
+                // if not blank, then update!
+                if ( item.value !== '' ){
+                    octopus.submitChanges(currentCat, item);
+                }
+            }
+        }, false);
+
+        // cancel change & close admin area when cancelled
+        cancelButton.addEventListener('click', function(){
+            console.log('cancelled.');
         }, false);
     }
 };
