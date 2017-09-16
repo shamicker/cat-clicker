@@ -22,13 +22,13 @@ var model = {
     'id': 'hi-5',
     'score': 0,
     'attribution': 'https://www.google.ca/imgres?imgurl=http%3A%2F%2Fwww.cats.org.uk%2Fuploads%2Fimages%2Fpages%2Fphoto_latest14.jpg&imgrefurl=http%3A%2F%2Fwww.cats.org.uk%2Fget-involved%2Fsupport-us%2Fcat-magazine%2Fabout-cat-magazine&docid=3j-Iox0Pm2nR-M&tbnid=RJltW7SoXrjC0M%3A&vet=10ahUKEwiZlrP8pafWAhUJ6SYKHc12DeQQMwiBAiggMCA..i&w=574&h=710&bih=683&biw=1087&q=cat%20images&ved=0ahUKEwiZlrP8pafWAhUJ6SYKHc12DeQQMwiBAiggMCA&iact=mrc&uact=8',
-    'alt': 'Hi-5 is a master hi-5-er!'
+    'alt': 'This cat!'
   },{
     'image': 'images/pipsqueak.jpg',
     'id': 'pipsqueak',
     'score': 0,
     'attribution': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9j2LkI_WHZhvhuK_BTn6uv8G6OjmjnegZCQUojFPOeUZmdU9m1Q',
-    'alt': 'What a cutie Pipsqueak is.'
+    'alt': 'What a cutie!'
   },{
     'image': 'images/jetske.jpg',
     'attribution': 'https://lh5.ggpht.com/LfjkdmOKkGLvCt-VuRlWGjAjXqTBrPjRsokTNKBtCh8IFPRetGaXIpTQGE2e7ZCUaG2azKNkz38KkbM_emA=s0#w=640&h=454',
@@ -52,7 +52,7 @@ var octopus = {
   init: function(){
     viewList.init();
     viewCard.init();
-    // admin.init();
+    admin.init();
   },
 
   makeUpperCase: function(item){
@@ -95,12 +95,13 @@ var octopus = {
 
   submitChanges: function(currentCat, inputNode){
     console.log('\nsubmitting ' + inputNode.getAttribute('name'));
-    var currentCatInfo = octopus.getCatInfo(currentCat);
     var key = inputNode.getAttribute('name');
-    currentCatInfo[key] = inputNode.value;
+    currentCat[key] = inputNode.value;
     console.log('key is: ', key);
-    console.log('currentCatInfo[' + key + '] is: ', currentCatInfo[key]);
-    // admin.render();
+    console.log('currentCat[' + key + '] is: ', currentCat[key]);
+
+    viewList.render();
+    viewCard.render();
   }
 };
 
@@ -118,6 +119,9 @@ var viewList = {
   },
 
   render: function(){
+    // clear the list first!
+    this.ulElement.innerHTML = "";
+
     // get list of cat ids, loop through and add into list
     var cats = octopus.getAllCats();
 
@@ -185,5 +189,63 @@ var viewCard = {
     this.count.textContent = currentCat.score;
   }
 };
+
+/* *********************** ADMIN ************************** */
+
+// admin button toggles the admin section
+// where user can alter current cat's name, url, click count
+var admin = {
+    init: function(){
+        // get buttons for event listeners
+        this.button = document.getElementById('admin');
+        this.submitButton = document.getElementById('makeChanges');
+        this.cancelButton = document.getElementById('cancel');
+
+        // set text
+        this.button.innerHTML = "<h2>Admin</h2>";
+        idLabel.innerHTML = "Change name to:";
+        imageLabel.innerHTML = "Change url to:";
+        scoreLabel.innerHTML = "Change clicks to:";
+
+        console.log('3 labels: ', idLabel, imageLabel, scoreLabel);
+
+        // opens admin section on click
+        this.button.addEventListener('click', function(){
+            this.nextElementSibling.classList.remove('hide');
+        }, false);
+
+        // change data when submitted
+        this.submitButton.addEventListener('click', function(){
+            console.log('submit button clicked!');
+            var children = this.parentElement.getElementsByTagName('label');
+            var currentCat = octopus.getCurrentCat();
+
+            if ( !currentCat ){
+              alert('Please choose a cat before changing its name.');
+            }
+
+            // get input values
+            for (var i=0; i<children.length; i++){
+                var item = children[i].nextElementSibling;
+
+                // if not blank, then update!
+                if ( item.value !== '' ){
+                    octopus.submitChanges(currentCat, item);
+                }
+            }
+
+            // clear the form and close the admin area
+            this.parentElement.reset();
+            this.parentElement.classList.add('hide');
+
+        }, false);
+
+        // cancel change & close admin area when cancelled
+        this.cancelButton.addEventListener('click', function(){
+            console.log('cancelled.');
+        }, false);
+    }
+};
+
 
 octopus.init();
