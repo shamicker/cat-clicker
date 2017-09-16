@@ -71,16 +71,20 @@ var octopus = {
     return model.cats;
   },
 
-  changeListColour: function(cat){
-    // get ul
+  changeListColour: function(){
+
+    // get ul element
     var ulKids = document.getElementById('cat-list').children;
 
     // remove all colours from list
     for ( var i = 0; i<ulKids.length; i++){
       ulKids[i].classList.remove('selected');
 
+      // console.log('ulkids[' +i+ '].id: ', ulKids[i].getAttribute('id'));
+      // console.log('model.currentCat.id: ',model.currentCat.id);
+
       // add colour to cat's list element
-      if ( ulKids[i].getAttribute('id') === cat.id ){
+      if ( ulKids[i].getAttribute('id') === model.currentCat.id ){
         ulKids[i].classList.add('selected');
       }
     }
@@ -100,6 +104,10 @@ var octopus = {
     console.log('key is: ', key);
     console.log('currentCat[' + key + '] is: ', currentCat[key]);
 
+    this.setCurrentCat(currentCat);
+    console.log('currentCat is now: ', currentCat.id);
+    // this.changeListColour(currentCat);
+    // console.log('highlighted cat: ', currentCat.id);
     viewList.render();
     viewCard.render();
   }
@@ -130,7 +138,7 @@ var viewList = {
       var item = document.createElement('li');
       var h2 = document.createElement('h2');
 
-      // var here = this;
+      // octopus.changeListColour(octopus.getCurrentCat());
 
       // set id and text
       item.setAttribute('id', cats[i].id);
@@ -140,9 +148,12 @@ var viewList = {
       item.addEventListener('click', (function(cat){
         // keep fns in storage until the click happens,
         // and THEN call them with the (appropriate) arguments
+
+        if ( octopus.getCurrentCat() ){
+          octopus.changeListColour();
+        }
+
         return function(){
-          // remove all list selection colours
-          octopus.changeListColour(cat);
 
           // if viewCard isn't open, open it
           if ( octopus.getCurrentCat() === null ){
@@ -150,6 +161,12 @@ var viewList = {
           }
           // set current cat
           octopus.setCurrentCat(cat);
+
+          // remove all highlights in list
+          octopus.changeListColour();
+          // highlights current cat's name
+          this.classList.add('selected');
+
           viewCard.render();
         };
       })(cats[i]), false);
@@ -207,7 +224,8 @@ var admin = {
         imageLabel.innerHTML = "Change url to:";
         scoreLabel.innerHTML = "Change clicks to:";
 
-        console.log('3 labels: ', idLabel, imageLabel, scoreLabel);
+        // TODO: WHY are these variables correct?
+        // console.log('3 labels: ', idLabel, imageLabel, scoreLabel);
 
         // opens admin section on click
         this.button.addEventListener('click', function(){
@@ -234,16 +252,19 @@ var admin = {
                 }
             }
 
-            // clear the form and close the admin area
-            this.parentElement.reset();
-            this.parentElement.classList.add('hide');
-
+            admin.cancel();
         }, false);
 
         // cancel change & close admin area when cancelled
         this.cancelButton.addEventListener('click', function(){
-            console.log('cancelled.');
+            admin.cancel();
         }, false);
+    },
+
+    cancel: function(){
+      // clear the form and close the admin area
+      this.button.nextElementSibling.reset();
+      this.button.nextElementSibling.classList.add('hide');
     }
 };
 
